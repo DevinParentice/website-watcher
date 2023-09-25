@@ -2,8 +2,9 @@ import requests
 import json
 import threading
 import os
-from dotenv import load_dotenv
 
+from datetime import datetime
+from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 
 import yagmail
@@ -105,12 +106,15 @@ def webpage_was_changed(website, log):
 
 
 def main():
+    now = datetime.now()
     log = logging.getLogger(__name__)
     logging.basicConfig(
         level=os.environ.get("LOGLEVEL", "INFO"),
         format="[%(asctime)s] | [%(levelname)s] | %(message)s",
-        filemode="a",
-        filename="website_monitor.log",
+        handlers=[
+            logging.FileHandler(f"website_monitor_{now.year}_{now.month}_{now.day}_{now.hour}.log"),
+            logging.StreamHandler(),
+        ],
     )
     log.info("Running Website Monitor")
 
