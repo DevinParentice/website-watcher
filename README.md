@@ -19,7 +19,7 @@ Edit `config.json` by adding the site(s) you want to monitor:
       {
         "name": "pinkyup_tea", // Name to give this monitor for tracking purposes.
         "url": "https://www.example.com", // URL to monitor.
-        "delay": 10000, // Delay before checking again, in minutes.
+        "delay": 120, // Delay before checking again, in minutes.
         "elements": [ // The elements on the page you wish to monitor.
           { // For example, this monitors <span class="product__price">Example</span>
              "tag": "span",
