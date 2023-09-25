@@ -5,7 +5,7 @@ Monitors websites for changes, and sends an email notification when one is detec
 ## Installation
 
 ```bash
-  git clone ...
+  git clone https://github.com/DevinParentice/website-watcher.git
   pip install -r requirements.txt
 ```
 
