@@ -95,7 +95,7 @@ def webpage_was_changed(website, log):
             log.info(f"{f'[{website_name}]':<15} | Check finished, changes detected")
             if stale_content != {}:
                 send_email_alert(website_name, stale_content, previous_content[website_name], log)
-        time.sleep(website["delay"])
+        time.sleep(website["delay"] * 60)
 
 
 def main():
