@@ -1,3 +1,4 @@
+import re
 import requests
 import json
 import threading
@@ -10,8 +11,11 @@ from bs4 import BeautifulSoup
 import yagmail
 import time
 import logging
+import logging.handlers
 
 load_dotenv()
+if not os.path.exists("./logs"):
+    os.makedirs("logs")
 
 SENDING_EMAIL_USERNAME = os.environ.get("SENDER_EMAIL")
 SENDING_EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
@@ -112,7 +116,7 @@ def main():
         level=os.environ.get("LOGLEVEL", "INFO"),
         format="[%(asctime)s] | [%(levelname)s] | %(message)s",
         handlers=[
-            logging.FileHandler(f"website_monitor_{now.year}_{now.month}_{now.day}_{now.hour}.log"),
+            logging.handlers.TimedRotatingFileHandler("./logs/website_monitor", when="midnight", backupCount=31),
             logging.StreamHandler(),
         ],
     )
