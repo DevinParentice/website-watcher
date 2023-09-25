@@ -15,19 +15,19 @@ Edit `config.json` by adding the site(s) you want to monitor:
 
 ```bash
   {
-	"websites": [
-		{
-			"name": "pinkyup_tea", // Name to give this monitor for tracking purposes.
-			"url": "https://www.example.com", // URL to monitor.
-			"delay": 10000, // Delay before checking again, in seconds.
-			"elements": [ // The elements on the page you wish to monitor.
-				{ // For example, this monitors <span class="product__price">Example</span>
-					"tag": "span",
-					"class": "product__price"
-				}
-			] // Can add multiple nodes for monitoring.
-		} // Can add multiple sites for monitoring.
-	]
+    "websites": [
+      {
+        "name": "pinkyup_tea", // Name to give this monitor for tracking purposes.
+        "url": "https://www.example.com", // URL to monitor.
+        "delay": 10000, // Delay before checking again, in seconds.
+        "elements": [ // The elements on the page you wish to monitor.
+          { // For example, this monitors <span class="product__price">Example</span>
+             "tag": "span",
+             "class": "product__price"
+          }
+        ] // Can add multiple nodes for monitoring.
+      } // Can add multiple sites for monitoring.
+   ]
 }
 ```
 
