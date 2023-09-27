@@ -16,15 +16,15 @@ RECIPIENT_EMAIL_ADDRESS = os.environ.get("RECIPIENT_EMAIL")
 if not os.path.exists("./logs"):
     os.makedirs("logs")
 
+if not os.path.exists("content.json"):
+    open("content.json", "w+").close()
+
 
 def webpage_has_changed(website, log):
     """Checks if the webpage has changed."""
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36"
     }
-
-    if not os.path.exists("content.json"):
-        open("content.json", "w+").close()
 
     website_name = website["name"]
 
