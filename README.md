@@ -7,32 +7,13 @@ Monitors websites for changes, and sends an email notification when one is detec
 ```bash
   git clone https://github.com/DevinParentice/website-watcher.git
   cd website-watcher
-  pip install -r requirements.txt
 ```
 
 ## Run Locally
 
-Edit `config.json` by adding the site(s) you want to monitor:
+### Backend
 
-```bash
-  {
-    "websites": [
-      {
-        "name": "Example Name", // Name to give this monitor for tracking purposes.
-        "url": "https://www.example.com", // URL to monitor.
-        "delay": 120, // Delay before checking again, in minutes.
-        "elements": [ // The elements on the page you wish to monitor.
-          { // For example, this monitors <span class="product-price">Example</span>
-             "tag": "span",
-             "class": "product-price"
-          }
-        ] // Can add multiple nodes for monitoring.
-      } // Can add multiple sites for monitoring.
-   ]
-}
-```
-
-Create a `.env` file to the root directory of the project and format it as such (replace with your own):
+Create a `.env` file to the /backend folder and format it as such (replace with your own):
 
 ```bash
 EMAIL_PASSWORD=example password
@@ -40,8 +21,28 @@ RECIPIENT_EMAIL=test@example.com
 SENDER_EMAIL=test@example.com
 ```
 
-Run the script:
+To start the backend server, run the below commands:
+
+```bash
+cd backend
+pip install -r requirements.txt
+python app.py
+```
+
+To run the watcher, open a new terminal and run:
 
 ```bash
 python watcher.py
 ```
+
+### Frontend
+
+To start the frontend, run the below commands:
+
+```bash
+cd frontend
+yarn install
+yarn dev
+```
+
+Production build coming later.
