@@ -21,7 +21,7 @@ export default function NewMonitorPopup({ setModalIsOpen }) {
 			body: JSON.stringify({
 				name: siteName,
 				url: siteUrl,
-				delay: delay,
+				delay: parseInt(delay),
 				elements: [
 					{
 						tag: tag,

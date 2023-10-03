@@ -1,6 +1,7 @@
 import json
 import os
 import requests
+import sys
 import time
 import threading
 
@@ -64,6 +65,20 @@ def webpage_has_changed(website, log):
         time.sleep(website["delay"] * 60)
 
 
+def update_watcher(log):
+    cached_timestamp = None
+    while True:
+        if cached_timestamp is not None:
+            timestamp = os.stat("./config.json").st_mtime
+            if cached_timestamp != timestamp:
+                cached_timestamp = timestamp
+                log.info("Config change detected, rebooting watchers")
+                os.execv(sys.executable, ["python"] + sys.argv)
+        else:
+            cached_timestamp = os.stat("./config.json").st_mtime
+        time.sleep(2)
+
+
 def main():
     log = init_logger()
     log.info("Running Website Monitor")
@@ -71,7 +86,9 @@ def main():
     watcher_config = load_config()
 
     for website in watcher_config["websites"]:
-        threading.Thread(target=webpage_has_changed, args=(website, log)).start()
+        threading.Thread(target=webpage_has_changed, args=(website, log), daemon=True).start()
+
+    update_watcher(log)
 
 
 if __name__ == "__main__":
