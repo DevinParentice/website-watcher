@@ -13,14 +13,30 @@ export default function Monitors(data) {
 			}),
 		});
 		const body = await res.json();
-		console.log(body);
 		if (body.success) {
 			return true;
 		}
 		return false;
 	};
 
-	const deleteElement = async (element) => {};
+	const deleteElement = async (website, element) => {
+		const res = await fetch("http://127.0.0.1:5000/api/deleteElement", {
+			method: "DELETE",
+			mode: "cors",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				name: website["name"],
+				elementClass: element["class"],
+			}),
+		});
+		const body = await res.json();
+		if (body.success) {
+			return true;
+		}
+		return false;
+	};
 	const addElement = async (website) => {};
 
 	return (
@@ -47,7 +63,7 @@ export default function Monitors(data) {
 													<p className="py-1 px-3">{element["class"]}</p>
 												</div>
 												<button
-													onClick={() => deleteElement(element)}
+													onClick={() => deleteElement(website, element)}
 													className=" bg-slate-600 h-full rounded-r-md px-1"
 												>
 													&#10006;

@@ -56,6 +56,24 @@ def add_element():
     return "", 204
 
 
+@app.route("/api/deleteElement", methods=["DELETE"])
+def delete_element():
+    try:
+        request_json = request.get_json()
+        with open("config.json") as f:
+            saved_config = json.load(f)
+        for i, website in enumerate(saved_config["websites"]):
+            if website["name"] == request_json["name"]:
+                for j, element in enumerate(saved_config["websites"][i]["elements"]):
+                    if element["class"] == request_json["elementClass"]:
+                        del saved_config["websites"][i]["elements"][j]
+        with open("config.json", "w", encoding="utf-8") as f:
+            json.dump(saved_config, f, ensure_ascii=False)
+    except Exception as e:
+        return {"success": False, "error": e}
+    return {"success": True, "error": None}
+
+
 @app.route("/api/authenticate", methods=["POST"])
 def authenticate():
     with open("config.json") as f:
