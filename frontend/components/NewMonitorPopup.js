@@ -6,8 +6,7 @@ export default function NewMonitorPopup({ setModalIsOpen, setMonitors }) {
 	const [siteName, setSiteName] = useState("");
 	const [siteUrl, setSiteUrl] = useState("");
 	const [delay, setDelay] = useState("");
-	const [tag, setTag] = useState("");
-	const [htmlClass, setHtmlClass] = useState("");
+	const [newElements, setNewElements] = useState([{ tag: "", class: "" }]);
 
 	const createMonitor = async (e) => {
 		e.preventDefault();
@@ -22,12 +21,7 @@ export default function NewMonitorPopup({ setModalIsOpen, setMonitors }) {
 				name: siteName,
 				url: siteUrl,
 				delay: parseInt(delay),
-				elements: [
-					{
-						tag: tag,
-						class: htmlClass,
-					},
-				],
+				elements: newElements,
 			}),
 		});
 		const body = await res.json();
@@ -92,40 +86,71 @@ export default function NewMonitorPopup({ setModalIsOpen, setMonitors }) {
 							placeholder="120"
 							className="text-black p-1 rounded-sm mb-6"
 						/>
-						<div className="flex max-w-96">
-							<div className="">
-								<label htmlFor="delay" className="mb-1">
-									Element tag
-								</label>
-								<input
-									type="tel"
-									name="tag1"
-									id="tag1"
-									value={tag}
-									onChange={(e) => setTag(e.target.value)}
-									placeholder="span"
-									className="text-black p-1 rounded-sm mr-4 w-full"
-								/>
-							</div>
-							<div className="">
-								<label htmlFor="delay" className="mb-1 ml-6">
-									Element Class
-								</label>
-								<input
-									type="tel"
-									name="class1"
-									id="class1"
-									value={htmlClass}
-									onChange={(e) => setHtmlClass(e.target.value)}
-									placeholder="price-tag"
-									className="text-black p-1 rounded-sm ml-4 mb-10"
-								/>
-							</div>
+						<div className="flex flex-col max-w-96">
+							{newElements.map((element, i) => {
+								return (
+									<div key={i} className="flex">
+										<div className="">
+											<label htmlFor={`delay`} className="mb-1">
+												Tag
+											</label>
+											<input
+												type="tel"
+												name={`tag-${i}`}
+												id={`tag-${i}`}
+												value={element.tag}
+												onChange={(e) => {
+													const updatedElements = newElements.map(
+														(element, j) => {
+															if (j === i) {
+																return { ...element, tag: e.target.value };
+															}
+															return element;
+														}
+													);
+													setNewElements(() => updatedElements);
+												}}
+												placeholder="span"
+												className="text-black p-1 rounded-sm mr-4 w-full"
+											/>
+										</div>
+										<div className="">
+											<label htmlFor={`class-${i}`} className="mb-1 ml-6">
+												Class
+											</label>
+											<input
+												type="tel"
+												name={`class-${i}`}
+												id={`class-${i}`}
+												value={element.class}
+												onChange={(e) => {
+													const updatedElements = newElements.map(
+														(element, j) => {
+															if (j === i) {
+																return { ...element, class: e.target.value };
+															}
+															return element;
+														}
+													);
+													setNewElements(() => updatedElements);
+												}}
+												placeholder="price-tag"
+												className={`text-black p-1 rounded-sm ${
+													i + 1 === newElements.length ? "mb-10" : "mb-2"
+												} ml-6`}
+											/>
+										</div>
+									</div>
+								);
+							})}
 						</div>
 						<div className="flex justify-between">
 							<button
 								type="button"
 								className="bg-zinc-500 py-1 px-4 rounded-md"
+								onClick={() =>
+									setNewElements([...newElements, { tag: "", class: "" }])
+								}
 							>
 								Add element
 							</button>
