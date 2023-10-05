@@ -42,7 +42,14 @@ To start the frontend, run the below commands:
 ```bash
 cd frontend
 yarn install
-yarn dev
+yarn build
+yarn start
 ```
 
-Production build coming later.
+## Frontend Development
+
+To start the frontend in development mode, run the below command:
+
+```bash
+yarn dev
+```
