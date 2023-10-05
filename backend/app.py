@@ -25,7 +25,7 @@ def add_website():
             json.dump(saved_config, f, ensure_ascii=False)
     except Exception as e:
         return {"success": False, "error": e}
-    return {"success": True, "error": None}
+    return {"success": True, "monitors": saved_config, "error": None}
 
 
 @app.route("/api/deleteWebsite", methods=["DELETE"])
@@ -41,7 +41,7 @@ def delete_website():
             json.dump(saved_config, f, ensure_ascii=False)
     except Exception as e:
         return {"success": False, "error": e}
-    return {"success": True, "error": None}
+    return {"success": True, "monitors": saved_config, "error": None}
 
 
 @app.route("/api/addElement", methods=["POST"])
@@ -50,10 +50,10 @@ def add_element():
         saved_config = json.load(f)
     for website in saved_config["websites"]:
         if website["name"] == request.get_json()["name"]:
-            website["elements"].append[request.get_json()["element"]]
+            website["elements"].append(request.get_json()["element"])
     with open("config.json", "w", encoding="utf-8") as f:
         json.dump(saved_config, f, ensure_ascii=False)
-    return "", 204
+    return {"success": True, "monitors": saved_config, "error": None}
 
 
 @app.route("/api/deleteElement", methods=["DELETE"])
@@ -71,7 +71,7 @@ def delete_element():
             json.dump(saved_config, f, ensure_ascii=False)
     except Exception as e:
         return {"success": False, "error": e}
-    return {"success": True, "error": None}
+    return {"success": True, "monitors": saved_config, "error": None}
 
 
 @app.route("/api/authenticate", methods=["POST"])
@@ -81,7 +81,7 @@ def authenticate():
     saved_config["websites"].append(request.get_json())
     with open("config.json", "w", encoding="utf-8") as f:
         json.dump(saved_config, f, ensure_ascii=False)
-    return "", 204
+    return {"success": True, "error": None}
 
 
 app.run(debug=True)

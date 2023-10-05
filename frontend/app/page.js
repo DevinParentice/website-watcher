@@ -12,7 +12,9 @@ export default async function Home() {
 }
 
 async function getData() {
-	const res = await fetch("http://127.0.0.1:5000/api/getMonitors");
+	const res = await fetch("http://127.0.0.1:5000/api/getMonitors", {
+		cache: "no-cache",
+	});
 
 	if (!res.ok) {
 		throw new Error("Failed to fetch monitors");

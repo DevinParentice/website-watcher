@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function NewMonitorPopup({ setModalIsOpen }) {
+export default function NewMonitorPopup({ setModalIsOpen, setMonitors }) {
 	const [siteName, setSiteName] = useState("");
 	const [siteUrl, setSiteUrl] = useState("");
 	const [delay, setDelay] = useState("");
@@ -32,6 +32,7 @@ export default function NewMonitorPopup({ setModalIsOpen }) {
 		});
 		const body = await res.json();
 		if (body.success) {
+			setMonitors(body.monitors);
 			setModalIsOpen(false);
 			return true;
 		}

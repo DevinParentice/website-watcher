@@ -1,6 +1,12 @@
 "use client";
 
-export default function Monitors(data) {
+import { useState } from "react";
+import NewElementPopup from "./NewElementPopup";
+
+export default function Monitors({ monitors, setMonitors }) {
+	const [addElementModalOpen, setAddElementModalOpen] = useState(false);
+	const [selectedSite, setSelectedSite] = useState("");
+
 	const deleteMonitor = async (website) => {
 		const res = await fetch("http://127.0.0.1:5000/api/deleteWebsite", {
 			method: "DELETE",
@@ -14,6 +20,7 @@ export default function Monitors(data) {
 		});
 		const body = await res.json();
 		if (body.success) {
+			setMonitors(body.monitors);
 			return true;
 		}
 		return false;
@@ -33,15 +40,15 @@ export default function Monitors(data) {
 		});
 		const body = await res.json();
 		if (body.success) {
+			setMonitors(body.monitors);
 			return true;
 		}
 		return false;
 	};
-	const addElement = async (website) => {};
 
 	return (
 		<div className="max-w-screen-lg w-full">
-			{data["monitors"]["websites"].map((website, i) => {
+			{monitors["websites"].map((website, i) => {
 				return (
 					<div key={i} className="p-4 bg-zinc-700 my-4">
 						<div className="flex justify-between">
@@ -50,7 +57,10 @@ export default function Monitors(data) {
 								<div className="flex gap-4 text-sm">
 									<div className="bg-slate-500 rounded-md flex">
 										<button
-											onClick={() => addElement(website)}
+											onClick={() => {
+												setSelectedSite(website["name"]);
+												setAddElementModalOpen(true);
+											}}
 											className=" bg-slate-600 h-full rounded-md px-2 text-xl"
 										>
 											&#43;
@@ -83,6 +93,13 @@ export default function Monitors(data) {
 					</div>
 				);
 			})}
+			{addElementModalOpen && (
+				<NewElementPopup
+					siteName={selectedSite}
+					setAddElementModalOpen={setAddElementModalOpen}
+					setMonitors={setMonitors}
+				/>
+			)}
 		</div>
 	);
 }

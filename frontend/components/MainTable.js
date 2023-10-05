@@ -21,9 +21,14 @@ export default function MainTable({ data }) {
 						Add <span className="font-extrabold text-xl">+</span>
 					</button>
 				</div>
-				<Monitors monitors={monitors} />
+				<Monitors monitors={monitors} setMonitors={setMonitors} />
 			</div>
-			{modalIsOpen && <NewMonitorPopup setModalIsOpen={setModalIsOpen} />}
+			{modalIsOpen && (
+				<NewMonitorPopup
+					setModalIsOpen={setModalIsOpen}
+					setMonitors={setMonitors}
+				/>
+			)}
 		</>
 	);
 }
