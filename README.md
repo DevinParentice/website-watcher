@@ -46,7 +46,7 @@ yarn build
 yarn start
 ```
 
-## Frontend Development
+### Frontend in Development Mode
 
 To start the frontend in development mode, run the below command:
 
